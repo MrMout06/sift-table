@@ -113,6 +113,21 @@ function siftXlsxBase64(columns, rows, pixelWidths) {
   const zip = new Uint8Array(total);
   let offset = 0;
   for (const chunk of [...chunks, ...central, tail]) { zip.set(chunk, offset); offset += chunk.length; }
+  // Validate the completed central directory before returning any Excel file.
+  // A malformed ZIP may otherwise be silently "repaired" by Microsoft Excel.
+  const read16 = i => zip[i] | zip[i + 1] << 8;
+  const read32 = i => (zip[i] | zip[i + 1] << 8 | zip[i + 2] << 16 | zip[i + 3] << 24) >>> 0;
+  let directoryPosition = cursor;
+  for (let i = 0; i < files.length; i++) {
+    if (read32(directoryPosition) !== 0x02014b50) throw new Error('Invalid Excel ZIP directory entry.');
+    const nameLen = read16(directoryPosition + 28);
+    const extraLen = read16(directoryPosition + 30);
+    const commentLen = read16(directoryPosition + 32);
+    const localOffset = read32(directoryPosition + 42);
+    if (localOffset >= cursor || read32(localOffset) !== 0x04034b50) throw new Error('Invalid Excel ZIP file offset.');
+    directoryPosition += 46 + nameLen + extraLen + commentLen;
+  }
+  if (directoryPosition !== cursor + centralSize) throw new Error('Invalid Excel ZIP directory size.');
   const alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/';
   const segments = [];
   let segment = '';
