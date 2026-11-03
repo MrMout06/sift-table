@@ -1,5 +1,5 @@
 {
-		"version": "1.0.0.9",
+		"version": "1.0.0.10",
 		"author": {"name":"faizaan.me","email":"contact@faizaan.me"},
 		"resources": [
 			{
@@ -8,7 +8,7 @@
 				"file": "resources/siftTable37558C6455D74B6D80A77ABDBC28F82C.pbiviz.json"
 			}
 		],
-		"visual": {"name":"siftTable","displayName":"Sift Table","guid":"siftTable37558C6455D74B6D80A77ABDBC28F82C","visualClassName":"Visual","version":"1.0.0.9","description":"Table with a filter under every column header. Column filters become real Power BI report filters.","supportUrl":"https://faizaan.me","gitHubUrl":""},
+		"visual": {"name":"siftTable","displayName":"Sift Table","guid":"siftTable37558C6455D74B6D80A77ABDBC28F82C","visualClassName":"Visual","version":"1.0.0.10","description":"Table with a filter under every column header. Column filters become real Power BI report filters.","supportUrl":"https://faizaan.me","gitHubUrl":""},
 		"metadata": {
 			"pbivizjson": {
 				"resourceId": "rId0"
