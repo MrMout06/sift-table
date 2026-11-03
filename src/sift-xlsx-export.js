@@ -102,7 +102,7 @@ function siftXlsxBase64(columns, rows, pixelWidths) {
     const n = toUtf8(name), body = toUtf8(content), size = body.length, checksum = crc32(body);
     const header = Uint8Array.from([80,75,3,4,...little16(20),...little16(0),...little16(0),...little16(0),...little16(0),...little32(checksum),...little32(size),...little32(size),...little16(n.length),...little16(0)]);
     chunks.push(header, n, body);
-    const entry = Uint8Array.from([80,75,1,2,...little16(20),...little16(20),...little16(0),...little16(0),...little16(0),...little16(0),...little32(checksum),...little32(size),...little32(size),...little16(n.length),...little16(0),...little16(0),...little16(0),...little32(cursor)]);
+    const entry = Uint8Array.from([80,75,1,2,...little16(20),...little16(20),...little16(0),...little16(0),...little16(0),...little16(0),...little32(checksum),...little32(size),...little32(size),...little16(n.length),...little16(0),...little16(0),...little16(0),...little16(0),...little32(0),...little32(cursor)]);
     central.push(entry, n);centralSize += entry.length + n.length;
     cursor += header.length + n.length + size;
     if (cursor + centralSize > MAX_BYTES) throw new Error('Excel file exceeds the Power BI download limit (30 MB). Try filtering the table.');
